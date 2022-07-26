@@ -26,7 +26,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         backgroundColor: Colors.white,
         elevation: 1.0,
       ),
-      body: const AddTaskWidget(),
+      body:  AddTaskWidget(),
     );
   }
 }

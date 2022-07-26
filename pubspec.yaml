@@ -37,6 +37,12 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   flutter_event_calendar: ^0.0.8
   day_picker: ^2.1.0
+  sqflite: ^2.0.3
+  intl: ^0.17.0
+  conditional_builder_null_safety: ^0.0.6
+  flutter_bloc: ^8.0.1
+  bloc: ^8.0.3
+
 
 
 dev_dependencies:
