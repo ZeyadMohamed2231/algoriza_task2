@@ -31,55 +31,47 @@ class ScheduleWidget extends StatelessWidget {
       builder: (BuildContext context, AppStates state) {
         AppCubit cubit = AppCubit.get(context);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 10,),
               Row(
                 children:  [
-                  MyCalender(conColor: Colors.green, txtColor: Colors.white,dayNu: '31', dayTex: 'Sun',onTap: (){
+                  MyCalender(conColor: cubit.colorBaF, txtColor: cubit.colorTeF,dayNu: '31', dayTex: 'Sun',onTap: (){
                     tasks = cubit.sunTasks;
                     cubit.changeDays('sun');
+                    cubit.changeColor(cubit.days);
+
                   },),
-                  MyCalender(conColor: Colors.green, txtColor: Colors.white,dayNu: '1', dayTex: 'Mon',onTap: (){
+                  MyCalender(conColor: cubit.colorBaS, txtColor: cubit.colorTeS,dayNu: '1', dayTex: 'Mon',onTap: (){
                     tasks = cubit.munTasks;
                     cubit.changeDays('mon');
+                    cubit.changeColor(cubit.days);
                   },),
-                  MyCalender(conColor: Colors.green, txtColor: Colors.white,dayNu: '2', dayTex: 'Tue',onTap: (){
+                  MyCalender(conColor:cubit.colorBaT, txtColor:cubit.colorTeT,dayNu: '2', dayTex: 'Tue',onTap: (){
+                    cubit.changeColor(cubit.days);
                     cubit.changeDays('tue');
                     tasks = cubit.tueTasks;
                   },),
-                  MyCalender(conColor: Colors.green, txtColor: Colors.white,dayNu: '3', dayTex: 'Wed',onTap: (){
+                  MyCalender(conColor:cubit.colorBaFo, txtColor: cubit.colorTeFo,dayNu: '3', dayTex: 'Wed',onTap: (){
                     cubit.changeDays('wed');
                     tasks = cubit.wedTasks;
+                    cubit.changeColor(cubit.days);
                   },),
-                  MyCalender(conColor: Colors.green, txtColor: Colors.white,dayNu: '28', dayTex: 'Thu',onTap: (){
+                  MyCalender(conColor:cubit.colorBaFi, txtColor: cubit.colorTeFi,dayNu: '28', dayTex: 'Thu',onTap: (){
                     cubit.changeDays('thu');
                     tasks = cubit.thuTasks;
+                    cubit.changeColor(cubit.days);
                   },),
-                  MyCalender(conColor: Colors.green, txtColor: Colors.white,dayNu: '29', dayTex: 'Fri',onTap: (){
+                  MyCalender(conColor:cubit.colorBaSi, txtColor: cubit.colorTeSi,dayNu: '29', dayTex: 'Fri',onTap: (){
                     cubit.changeDays('fri');
                     tasks = cubit.friTasks;
+                    cubit.changeColor(cubit.days);
                   },),
-                  MyCalender(conColor: Colors.green, txtColor: Colors.white,dayNu: '30', dayTex: 'Sat',onTap: (){
+                  MyCalender(conColor:cubit.colorBaSv, txtColor: cubit.colorTeSv,dayNu: '30', dayTex: 'Sat',onTap: (){
                     cubit.changeDays('sat');
                     tasks = cubit.satTasks;
+                    cubit.changeColor(cubit.days);
                   },),
                 ],
               ),
@@ -126,7 +118,7 @@ class ScheduleWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  [
-                  Text('${model['start_time'].toString().substring(10,15)}',
+                  Text('${model['start_time'].toString().substring(10,15)} AM',
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -144,7 +136,7 @@ class ScheduleWidget extends StatelessWidget {
             ),
           ),
           IconButton(onPressed: (){},
-              icon: const Icon(Icons.check_circle,color: Colors.white))
+              icon: Icon(Icons.check_circle,color: cubit.iconColor))
 
 
         ],

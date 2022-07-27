@@ -34,7 +34,7 @@ class ScheduleScreen extends StatelessWidget {
               ),
             ),
             backgroundColor: Colors.white,
-            elevation: 1.0,
+            elevation:1.0,
 
           ),
           body: const ScheduleWidget(),

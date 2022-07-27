@@ -140,22 +140,22 @@ class AppCubit extends Cubit<AppStates>{
          if(element['date'].toString().contains("28")){
            thuTasks.add(element);
          }
-         if(element['date'].toString().contains("29")){
+         else if(element['date'].toString().contains("29")){
            friTasks.add(element);
          }
-         if(element['date'].toString().contains("30")){
+         else if(element['date'].toString().contains("30")){
            satTasks.add(element);
          }
-         if(element['date'].toString().contains("31")){
+         else if(element['date'].toString().contains("31")){
            sunTasks.add(element);
          }
-         if(element['date'].toString().contains("1")){
+         else if(element['date'].toString().contains("1")){
            munTasks.add(element);
          }
-         if(element['date'].toString().contains("2")){
+         else if(element['date'].toString().contains("2")){
            tueTasks.add(element);
          }
-         if(element['date'].toString().contains("3")){
+         else if(element['date'].toString().contains("3")){
            wedTasks.add(element);
          }
        });
@@ -235,6 +235,27 @@ class AppCubit extends Cubit<AppStates>{
 
   late String days;
 
+  Color colorBaF = Colors.white;
+  Color colorTeF = Colors.black;
+
+  Color colorBaS = Colors.white;
+  Color colorTeS = Colors.black;
+
+  Color colorBaT = Colors.white;
+  Color colorTeT = Colors.black;
+
+  Color colorBaFo = Colors.white;
+  Color colorTeFo = Colors.black;
+
+  Color colorBaFi = Colors.white;
+  Color colorTeFi = Colors.black;
+
+  Color colorBaSi = Colors.white;
+  Color colorTeSi = Colors.black;
+
+  Color colorBaSv = Colors.white;
+  Color colorTeSv = Colors.black;
+
   void changeDays(days){
     this.days = days;
     print(days);
@@ -242,6 +263,164 @@ class AppCubit extends Cubit<AppStates>{
     database!.close();
     createDatabase();
   }
+
+
+  void changeColor(String day){
+    if(day == "sun"){
+      colorBaF = Colors.green;
+      colorTeF =Colors.white;
+
+      colorBaS = Colors.white;
+      colorTeS =Colors.black;
+
+      colorBaT = Colors.white;
+      colorTeT =Colors.black;
+
+      colorBaFo = Colors.white;
+      colorTeFo =Colors.black;
+
+      colorBaFi = Colors.white;
+      colorTeFi =Colors.black;
+
+      colorBaSi = Colors.white;
+      colorTeSi =Colors.black;
+
+      colorBaSv = Colors.white;
+      colorTeSv =Colors.black;
+
+    }else if(day == "mon"){
+      colorBaF = Colors.white;
+      colorTeF =Colors.black;
+
+      colorBaS = Colors.green;
+      colorTeS =Colors.white;
+
+      colorBaT = Colors.white;
+      colorTeT =Colors.black;
+
+      colorBaFo = Colors.white;
+      colorTeFo =Colors.black;
+
+      colorBaFi = Colors.white;
+      colorTeFi =Colors.black;
+
+      colorBaSi = Colors.white;
+      colorTeSi =Colors.black;
+
+      colorBaSv = Colors.white;
+      colorTeSv =Colors.black;
+    }else if(day == "tue"){
+      colorBaF = Colors.white;
+      colorTeF =Colors.black;
+
+      colorBaS = Colors.white;
+      colorTeS =Colors.black;
+
+      colorBaT = Colors.green;
+      colorTeT =Colors.white;
+
+      colorBaFo = Colors.white;
+      colorTeFo =Colors.black;
+
+      colorBaFi = Colors.white;
+      colorTeFi =Colors.black;
+
+      colorBaSi = Colors.white;
+      colorTeSi =Colors.black;
+
+      colorBaSv = Colors.white;
+      colorTeSv =Colors.black;
+    }else if(day == "wed"){
+      colorBaF = Colors.white;
+      colorTeF =Colors.black;
+
+      colorBaS = Colors.white;
+      colorTeS =Colors.black;
+
+      colorBaT = Colors.white;
+      colorTeT =Colors.black;
+
+      colorBaFo = Colors.green;
+      colorTeFo =Colors.white;
+
+      colorBaFi = Colors.white;
+      colorTeFi =Colors.black;
+
+      colorBaSi = Colors.white;
+      colorTeSi =Colors.black;
+
+      colorBaSv = Colors.white;
+      colorTeSv =Colors.black;
+    }else if(day == "thu"){
+      colorBaF = Colors.white;
+      colorTeF =Colors.black;
+
+      colorBaS = Colors.white;
+      colorTeS =Colors.black;
+
+      colorBaT = Colors.white;
+      colorTeT =Colors.black;
+
+      colorBaFo = Colors.white;
+      colorTeFo =Colors.black;
+
+      colorBaFi = Colors.green;
+      colorTeFi =Colors.white;
+
+      colorBaSi = Colors.white;
+      colorTeSi =Colors.black;
+
+      colorBaSv = Colors.white;
+      colorTeSv =Colors.black;
+    }else if(day == "fri"){
+      colorBaF = Colors.white;
+      colorTeF =Colors.black;
+
+      colorBaS = Colors.white;
+      colorTeS =Colors.black;
+
+      colorBaT = Colors.white;
+      colorTeT =Colors.black;
+
+      colorBaFo = Colors.white;
+      colorTeFo =Colors.black;
+
+      colorBaFi = Colors.white;
+      colorTeFi =Colors.black;
+
+      colorBaSi = Colors.green;
+      colorTeSi =Colors.white;
+
+      colorBaSv = Colors.white;
+      colorTeSv =Colors.black;
+    }else if(day == "sat"){
+      colorBaF = Colors.white;
+      colorTeF =Colors.black;
+
+      colorBaS = Colors.white;
+      colorTeS =Colors.black;
+
+      colorBaT = Colors.white;
+      colorTeT =Colors.black;
+
+      colorBaFo = Colors.white;
+      colorTeFo =Colors.black;
+
+      colorBaFi = Colors.white;
+      colorTeFi =Colors.black;
+
+      colorBaSi = Colors.white;
+      colorTeSi =Colors.black;
+
+      colorBaSv = Colors.green;
+      colorTeSv =Colors.white;
+    }
+    emit(AppChangeColor());
+  }
+
+  Color iconColor= Colors.transparent;
+
+
 
 
 

@@ -5,6 +5,7 @@ import 'package:algoriza_task2/shared/components/form.dart';
 import 'package:algoriza_task2/shared/cubit/cubit.dart';
 import 'package:algoriza_task2/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -402,6 +403,9 @@ DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
                     padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                     child: FloatingActionButton.extended(
                       onPressed: () {
+
+                        FlutterAlarmClock.createAlarm(cubit.startTime.hour, cubit.startTime.minute);
+
                         debugPrint(cubit.title.text);
                         debugPrint(cubit.date.text);
                         if (cubit.title.text.isEmpty ||
@@ -439,43 +443,5 @@ DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
 
   }
 
-//   void createDatabase() async {
-//       database = await openDatabase(
-//       'todo.db',
-//       version: 1,
-//       onCreate: (database,version){
-//         debugPrint('database created');
-//         database.execute('CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, date TEXT, start_time TEXT, end_time TEXT, remind TEXT, repeat TEXT, status TEXT)').then((value) {
-//           debugPrint('Table Created');
-//         }).catchError((error){
-//           debugPrint('Error while creating Table ${error.toString()}');
-//         });
-//       },
-//       onOpen: (database)
-//       {
-//         // delete(database);
-//         debugPrint('database opened');
-//         getDataFromDatabase(database).then((value)
-//         {
-//           tasks = value;
-//         });
-//       }
-//   );
-// }
-//   Future insertToDatabase({required String title, required String date, required String startTime, required String endTime, required String remind, required String repeat, required String status}) async{
-//   return await database.transaction((txn) => txn.rawInsert(
-//       'INSERT INTO tasks(title, date, start_time, end_time, remind, repeat, status) VALUES ("$title","$date","$startTime","$endTime","$remind","$repeat","$status")')
-//       .then((value) {
-//     debugPrint('$value inserted successfully');
-//   }).catchError((error){
-//     debugPrint('Error while Inserting New Record Table ${error.toString()}');
-//   }));
-// }
-//   Future<List<Map>> getDataFromDatabase(database) async {
-//       return await database.rawQuery('SELECT * FROM tasks');
-//
-//     }
-//   void delete(database) async {
-//    await database.rawDelete('DELETE FROM tasks ');
-// }
+
 }

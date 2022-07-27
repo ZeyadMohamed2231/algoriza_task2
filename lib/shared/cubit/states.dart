@@ -34,3 +34,8 @@ class AppCloseRefresh extends AppStates {}
 
 class AppChangeDay extends AppStates {}
 
+class AppChangeColor extends AppStates {}
+
+class IconChangeColor extends AppStates {}
+
+
