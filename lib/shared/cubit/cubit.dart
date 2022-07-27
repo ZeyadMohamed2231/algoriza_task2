@@ -1,8 +1,9 @@
+
+
 import 'package:algoriza_task2/modules/board/presentation/widgets/all_tasks.dart';
 import 'package:algoriza_task2/modules/board/presentation/widgets/completed_tasks.dart';
 import 'package:algoriza_task2/modules/board/presentation/widgets/favorites_tasks.dart';
 import 'package:algoriza_task2/modules/board/presentation/widgets/un_completed_tasks.dart';
-
 import 'package:algoriza_task2/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,22 +18,46 @@ class AppCubit extends Cubit<AppStates>{
 
   int currentIndex = 0;
 
+  var  title= TextEditingController();
+  var  date=TextEditingController();
+  String? value;
+  String? valueRepeat;
+  TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
+  TimeOfDay startTime = const TimeOfDay(hour: 10, minute: 30);
 
   List<Widget> screens = [
-     AllTasksWidget(),
+    const AllTasksWidget(),
     const CompletedTasksWidget(),
     const UnCompletedTasksWidget(),
     const FavoritesTasksWidget()
   ];
 
+  List<Map> allTasks = [];
+  List<Map> compTasks = [];
+  List<Map> unCompTasks = [];
+  List<Map> favTasks = [];
+  List<Map> sunTasks = [];
+  List<Map> munTasks = [];
+  List<Map> tueTasks = [];
+  List<Map> wedTasks = [];
+  List<Map> thuTasks = [];
+  List<Map> friTasks = [];
+  List<Map> satTasks = [];
+
+
+
+  Database? database;
 
   void changeIndex(int index)
   {
+
   currentIndex = index;
   emit(AppChangeScreenState());
+  database!.close();
+  createDatabase();
+
   }
-  List<Map> tasks = [];
-  Database? database;
+
 
   void createDatabase()  {
     openDatabase(
@@ -50,19 +75,16 @@ class AppCubit extends Cubit<AppStates>{
         {
           // delete(database);
           print('database opened');
-          getDataFromDatabase(database).then((value)
-          {
-            tasks = value;
-            print(tasks);
-            emit(AppGetDatabaseState());
-          });
+          getDataFromDatabase(database);
         }
     ).then((value) {
       database = value;
       emit(AppCreateDatabaseState());
     });
   }
-     insertToDatabase({
+
+
+  insertToDatabase({
     required String title,
     required String date,
     required String startTime,
@@ -75,30 +97,110 @@ class AppCubit extends Cubit<AppStates>{
         .then((value) {
       print('$value inserted successfully');
       emit(AppInsertDatabaseState());
-      getDataFromDatabase(database).then((value)
-      {
-        tasks = value;
-        print(tasks);
-        emit(AppGetDatabaseState());
-      });
+      getDataFromDatabase(database);
     }).catchError((error){
       print('Error while Inserting New Record Table ${error.toString()}');
     }));
   }
-  Future<List<Map>> getDataFromDatabase(database) async {
-    return await database.rawQuery('SELECT * FROM tasks');
+
+
+  void getDataFromDatabase(database)  {
+
+    allTasks = [];
+    compTasks = [];
+    unCompTasks = [];
+    favTasks = [];
+    sunTasks = [];
+    munTasks = [];
+    tueTasks = [];
+    wedTasks = [];
+    thuTasks = [];
+    friTasks = [];
+    satTasks = [];
+
+    emit(AppGetDatabaseLoadingState());
+     database.rawQuery('SELECT * FROM tasks').then((value){
+       value.forEach((element) {
+         if(element['status'] == 'All'){
+          allTasks.add(element);
+         }
+         if(element['status'] == 'Completed'){
+           allTasks.add(element);
+           compTasks.add(element);
+
+         }
+         if(element['status'] == 'UnCompleted'){
+           allTasks.add(element);
+           unCompTasks.add(element);
+         }
+         if(element['status'] == 'Favorite'){
+           allTasks.add(element);
+           favTasks.add(element);
+         }
+         if(element['date'].toString().contains("28")){
+           thuTasks.add(element);
+         }
+         if(element['date'].toString().contains("29")){
+           friTasks.add(element);
+         }
+         if(element['date'].toString().contains("30")){
+           satTasks.add(element);
+         }
+         if(element['date'].toString().contains("31")){
+           sunTasks.add(element);
+         }
+         if(element['date'].toString().contains("1")){
+           munTasks.add(element);
+         }
+         if(element['date'].toString().contains("2")){
+           tueTasks.add(element);
+         }
+         if(element['date'].toString().contains("3")){
+           wedTasks.add(element);
+         }
+       });
+       emit(AppGetDatabaseState());
+     });
 
   }
   void delete(database) async {
     await database.rawDelete('DELETE FROM tasks ');
   }
 
-  var  title= TextEditingController();
-  var  date=TextEditingController();
-  String? value;
-  String? valueRepeat;
-  TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
-  TimeOfDay startTime = const TimeOfDay(hour: 10, minute: 30);
+  void deleteTask({
+  required int id })
+  async{
+    database!.rawDelete('DELETE FROM tasks WHERE id = ?',[id]).then((value) {
+      getDataFromDatabase(database);
+      emit(AppDeleteDatabaseState());
+    });
+  }
+
+  void updateData({
+    required String status,
+    required int id,
+  }
+      ) async{
+    database!.rawUpdate(
+      'UPDATE tasks SET status = ? WHERE id = ?',[status, id],
+    ).then((value) {
+      getDataFromDatabase(database);
+      emit(AppUpdateDatabaseState());
+    });
+  }
+
+
+
+  void changeScreens(){
+    insertToDatabase(title: title.text, date: date.text, startTime: startTime.toString(), endTime: endTime.toString(), remind: value.toString(), repeat: valueRepeat.toString(), status: 'All');
+    emit(AppChangeScreenGetDataBase());
+  }
+
+   closingRefDataBase() async{
+    await database!.close();
+    createDatabase();
+    emit(AppCloseRefresh());
+  }
 
 
   void getDate(DateTime value){
@@ -126,22 +228,22 @@ class AppCubit extends Cubit<AppStates>{
     emit(AppGetValueRep());
   }
 
-//   void getDataTextFormField({
-//      TextEditingController? title,
-//      TextEditingController? date,
-//      String? value,
-//      String? valueRepeat,
-//      TimeOfDay? endTime,
-//      TimeOfDay? startTime,
-// }){
-//     this.title = title!;
-//     this.date = date!;
-//     this.value = value;
-//     this.valueRepeat = valueRepeat;
-//     this.endTime = endTime!;
-//     this.startTime = startTime!;
-//
-//     emit(AppChangeTextFormFields());
-//   }
+
+
+  //Schedule Cubit
+
+
+  late String days;
+
+  void changeDays(days){
+    this.days = days;
+    print(days);
+    emit(AppChangeDay());
+    database!.close();
+    createDatabase();
+  }
+
+
+
 
 }

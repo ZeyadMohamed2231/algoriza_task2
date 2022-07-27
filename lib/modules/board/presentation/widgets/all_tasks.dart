@@ -4,42 +4,21 @@ import 'package:algoriza_task2/shared/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class taskFolder{
-  final int id;
-  final String title;
-
-  taskFolder({
-  required this.id,
-  required this.title,
-  });
-
-}
-
-
-
-
 class AllTasksWidget extends StatelessWidget {
-  // const AllTasksWidget({Key? key}) : super(key: key);
+
+  const AllTasksWidget({Key? key}) : super(key: key);
 
 
-//
-//   @override
-//   State<AllTasksWidget> createState() => _AllTasksWidgetState();
-// }
-//
-// class _AllTasksWidgetState extends State<AllTasksWidget> {
-
-  List<String> items = ['Completed','UnCompleted','Favorite','Delete'];
-
-  String? selectedItem = 'Completed';
 
   @override
   Widget build(BuildContext context) {
 
     return  BlocConsumer<AppCubit,AppStates>(
-        listener: ( context,  state) {},
-          builder: ( context,  state){
-          var tasks = AppCubit.get(context).tasks;
+        listener: (BuildContext context, AppStates state) {},
+          builder: (BuildContext context,AppStates  state){
+
+
+          var tasks = AppCubit.get(context).allTasks;
 
           return ListView.separated(
               itemBuilder: (context,index) => buildUserItem(tasks[index]),
@@ -75,26 +54,63 @@ class AllTasksWidget extends StatelessWidget {
         const SizedBox(
           width: 20,
         ),
-        Text('${model['title']}'),
-        // const SizedBox(
-        //   width: 180,
-        // ),
-        // IconButton(
-        //     onPressed: (){
-        //       // DropdownButton<String>(
-        //       //   value: selectedItem,
-        //       //   items: items.map((item) => DropdownMenuItem<String>(
-        //       //       value: item,
-        //       //       child: Text(item,style: TextStyle(fontSize: 24),),
-        //       //     )
-        //       //   ).toList(),
-        //       //   onChanged: (item)=> setState(() => selectedItem = item),
-        //       // );
-        //     },
-        //     icon: const Icon(
-        //     Icons.more_horiz,
-        //       color: Colors.green,
-        // )),
+        Expanded(child: Text('${model['title']}')),
+        const SizedBox(
+          width: 20,
+        ),
+        PopupMenuButton(
+          icon: const Icon(Icons.more_horiz_outlined,color: Colors.green,),
+          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+             PopupMenuItem(
+              child: ListTile(
+                leading: IconButton(
+                  onPressed: (){
+                    AppCubit.get(context).updateData(status: 'Completed', id: model['id'],);
+                  },
+                    icon: const Icon(Icons.done)),
+                title:  TextButton(onPressed: (){
+                  AppCubit.get(context).updateData(status: 'Completed', id: model['id'],);
+                }, child: const Text('Completed'),),
+              ),
+            ),
+             PopupMenuItem(
+              child: ListTile(
+                leading: IconButton(
+                    onPressed: (){
+                      AppCubit.get(context).updateData(status: 'UnCompleted', id: model['id'],);
+                    },
+                    icon: const Icon(Icons.undo)),
+                title:  TextButton(onPressed: (){
+                  AppCubit.get(context).updateData(status: 'UnCompleted', id: model['id'],);
+                }, child: const Text('UnCompleted'),),
+              ),
+            ),
+             PopupMenuItem(
+              child: ListTile(
+                leading: IconButton(
+                    onPressed: (){
+                      AppCubit.get(context).updateData(status: 'Favorite', id: model['id'],);
+                    },
+                    icon: const Icon(Icons.favorite)),
+                title:  TextButton(onPressed: (){
+                  AppCubit.get(context).updateData(status: 'Favorite', id: model['id'],);
+                }, child: const Text('Favorite'),),
+              ),
+            ),
+             PopupMenuItem(
+              child: ListTile(
+                leading: IconButton(
+                    onPressed: (){
+                      AppCubit.get(context).deleteTask(id: model['id'],);
+                    },
+                    icon: const Icon(Icons.delete)),
+                title:  TextButton(onPressed: (){
+                  AppCubit.get(context).deleteTask(id: model['id'],);
+                }, child: const Text('Delete'),),
+              ),
+            ),
+          ],
+        ),
       ],
     ),
   );

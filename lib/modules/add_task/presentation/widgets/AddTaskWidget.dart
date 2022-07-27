@@ -1,4 +1,5 @@
 import 'package:algoriza_task2/modules/board/presentation/pages/home_screen.dart';
+import 'package:algoriza_task2/modules/board/presentation/widgets/all_tasks.dart';
 import 'package:algoriza_task2/shared/components/constants.dart';
 import 'package:algoriza_task2/shared/components/form.dart';
 import 'package:algoriza_task2/shared/cubit/cubit.dart';
@@ -11,25 +12,17 @@ import 'package:sqflite/sqflite.dart';
 
 
 class AddTaskWidget extends StatelessWidget {
-//   const AddTaskWidget({Key? key}) : super(key: key);
-//
-//   @override
-//   State<AddTaskWidget> createState() => _AddTaskWidgetState();
-// }
-//
-// class _AddTaskWidgetState extends State<AddTaskWidget> {
-// TimeOfDay endTime = const TimeOfDay(hour: 10, minute: 30);
-// TimeOfDay startTime = const TimeOfDay(hour: 10, minute: 30);
+
 String dropdownValue = 'One';
 
-// var  title= TextEditingController();
-// var  date=TextEditingController();
 
 final items = ['1 day before',  '1 hour before',  '30 min before',  '10 min before','nothing'];
-// String? value;
+
 final itemsRepeat = ['Weekly',  'Daily', 'nothing'];
 
-// String? valueRepeat;
+  AddTaskWidget({Key? key}) : super(key: key);
+
+
 
 DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
   value: item,
@@ -47,7 +40,7 @@ DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
 
 
 
-  // String finalDate = '22-3-2021';
+
 
 
 
@@ -55,8 +48,6 @@ DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
 
 @override
   Widget build(BuildContext context) {
-    // title = TextEditingController();
-    // date = TextEditingController();
     return BlocProvider(
       create: (BuildContext context) => AppCubit()..createDatabase(),
       child: BlocConsumer<AppCubit,AppStates>(
@@ -427,11 +418,9 @@ DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
                               const SnackBar(
                                   content: Text("Enter All values")));
                         } else {
-                          cubit.insertToDatabase(title: cubit.title.text, date: cubit.date.text, startTime: cubit.startTime.toString(), endTime: cubit.endTime.toString(), remind: cubit.value.toString(), repeat: cubit.valueRepeat.toString(), status: 'UnCompleted');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text(
-                                      "Task has been added successfully")));
+                          cubit.changeScreens();
+
+
                         }
                       },
                       backgroundColor: Colors.green,

@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 void main() {
   BlocOverrides.runZoned(
         () {
-      // Use blocs...
+      runApp(const MyApp());
     },
     blocObserver: MyBlocObserver(),
   );
-  runApp(const MyApp());
+
 
 
 }
