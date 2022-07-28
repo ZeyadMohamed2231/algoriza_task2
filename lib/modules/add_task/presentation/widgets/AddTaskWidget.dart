@@ -423,8 +423,6 @@ DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
                                   content: Text("Enter All values")));
                         } else {
                           cubit.changeScreens();
-
-
                         }
                       },
                       backgroundColor: Colors.green,
